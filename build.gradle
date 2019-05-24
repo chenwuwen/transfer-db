@@ -1,0 +1,31 @@
+group 'cn.kanyun'
+version '1.0-SNAPSHOT'
+
+//表示对 java 插件的引用
+apply plugin: 'java'
+
+//指定编译编译.java文件的jdk版本
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/"}
+    mavenCentral()
+    jcenter()
+
+}
+
+//为了解决gradle创建工程时不生成src目录,gradle 5.1之后去掉了<<符号
+task "create-dirs"  {
+    sourceSets*.java.srcDirs*.each {
+        it.mkdirs()
+    }
+    sourceSets.main.resources.srcDirs.each {
+        it.mkdirs()
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+}
